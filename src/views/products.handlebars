@@ -1,1 +1,19 @@
 <h1>ESTAMOS ONLINE</h1>
+
+<div class="cards">
+    {{#each payload}}
+        <div class="card">
+            <h5 class="card-title">{{this.title}}</h5>
+            <p class="card-price">Price: {{this.price}}</p>
+            <p class="card-description">{{this.description}}</p>
+            <p class="card-stock" > Stock: {{this.stock}} </p>
+            <p> id {{this._id}} </p>
+            <form id="cart-form" action="/api/carts/65dbd4c941e59ab1b728fd40/products/{{this._id}}" method="post">
+                <button type="submit" id="add-cart">Agregar al carrito</button>
+            </form>
+        </div>
+    {{/each}}
+</div>
+
+
+
