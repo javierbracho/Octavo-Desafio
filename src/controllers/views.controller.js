@@ -12,9 +12,9 @@ class ViewsController {
     //pendiente que no carga ya que aun no tenemos session
     async register ( req, res) {
         try {
-            if(req.session.login) {
-                return res.redirect("products")
-            }
+      if (req.session && req.session.login) {
+            return res.redirect("products");           
+         }
             res.render("register")
     
         } catch (error) {

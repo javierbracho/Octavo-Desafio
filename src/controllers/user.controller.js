@@ -1,9 +1,9 @@
-import hashbrypt from "../utils/hashbcrypt.js";
-import autenticarUsuario from "../repositories/user.repository.js";
+import hashbcrypt from "../utils/hashbcrypt.js";
+import nuevoUsuario from "../repositories/user.repository.js";
 
 class userController {
     async userRegister (req, res) {
-        autenticarUsuario(req, res, async () => {
+        nuevoUsuario(req, res, async () => {
             if (!req.user) {
                 return res.status(400).send ({status:"error"})
             }

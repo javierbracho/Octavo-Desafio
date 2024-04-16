@@ -10,6 +10,7 @@ import session from "express-session";
 import configObject from "./config/config.js";
 import MongoStore from "connect-mongo";
 import userRouter from "./routes/user.router.js"
+import sessionRouter from "./routes/session.router.js"
 
 //Constantes
 //conexion puerto
@@ -25,6 +26,17 @@ app.use(Express.urlencoded({extended:true}))
 app.use(Express.static("./src/public"))
 app.use(cookieParser())
 
+//Cargar session
+app.use(session ({
+    secret: "coderhouse",
+    resave: true,
+    saveUninitialized: true,
+    store: MongoStore.create({
+        mongoUrl: "mongodb+srv://jbracho07:coderhouse@cluster0.sd6827y.mongodb.net/Automotora?retryWrites=true&w=majority&appName=Cluster0",
+        ttl: 100
+    })
+}))
+
 //handlebars
 app.engine("handlebars", ExpressHandlebars.engine())
 app.set("view engine", "handlebars")
@@ -35,17 +47,9 @@ app.use("/products", productsRouter)
 app.use("/api/products", productsRouter)
 app.use("/home", viewsRouter) // cambiar direcciones para que sea mas legible
 app.use("/user", userRouter)
+app.use("/session", sessionRouter)
 
-//Cargar session
-app.use(session ({
-    secret: "coderhouse",
-    resave: true,
-    saveUninitialized: true,
-    store: MongoStore.create({
-        mongoUrl: mongo_url,
-        ttl: 100
-    })
-}))
+
 
 //Iniciar passport
 initializePassport()
