@@ -32,7 +32,7 @@ app.use(session ({
     resave: true,
     saveUninitialized: true,
     store: MongoStore.create({
-        mongoUrl: "mongodb+srv://jbracho07:coderhouse@cluster0.sd6827y.mongodb.net/Automotora?retryWrites=true&w=majority&appName=Cluster0",
+        mongoUrl: mongo_url,
         ttl: 100
     })
 }))
