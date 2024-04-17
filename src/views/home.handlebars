@@ -1,6 +1,11 @@
 <h1>Esto es el home</h1>
 <div class="container mt-5">
     <h2 class="text-center">Inicio de Sesión</h2>
+        {{#if error}}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+    {{/if}}
     <form id="loginForm" action="/session/login" method="POST">
         <div class="mb-3"> 
             <label for="email" class="form-label">Email:</label> 

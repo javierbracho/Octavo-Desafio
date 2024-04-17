@@ -25,8 +25,8 @@ class sessionController {
 
     async faillogin (req, res) {
         try {
-            res.send({error: "error al loguear"})
-        } catch (error) {
+            res.status(401).render('home', { error: '¡Ups! Parece que tus credenciales de inicio de sesión son incorrectas. Por favor, revisa tu nombre de usuario y contraseña y vuelve a intentarlo.' });
+                } catch (error) {
             res.status(500).send({ status: "error", message: "Error en el servidor" });
 
         }
@@ -37,7 +37,7 @@ class sessionController {
             if (req.session.login) {
                 req.session.destroy()
              }
-             res.redirect("/login")
+             res.redirect("/home")
         } catch (error) {
             res.status(500).send({ status: "error", message: "Error en el servidor" });
  
