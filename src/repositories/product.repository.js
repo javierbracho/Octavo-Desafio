@@ -97,7 +97,9 @@ class ProductRepository {
                 }
                 console.log("Producto actualizado")
         } catch (error) {
-            
+            res.status(500).json("Error en el servidor")
+            console.log("error al encontrar producto", error)
+
         }
     }
 

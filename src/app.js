@@ -11,6 +11,7 @@ import configObject from "./config/config.js";
 import MongoStore from "connect-mongo";
 import userRouter from "./routes/user.router.js"
 import sessionRouter from "./routes/session.router.js"
+import cartRouter from "./routes/cart.router.js"
 
 //Constantes
 //conexion puerto
@@ -28,7 +29,7 @@ app.use(cookieParser())
 
 //Cargar session
 app.use(session ({
-    secret: "coderhouse",
+    secret: "coderhouse", //esconder clave con variable de entorno
     resave: true,
     saveUninitialized: true,
     store: MongoStore.create({
@@ -48,6 +49,7 @@ app.use("/api/products", productsRouter)
 app.use("/home", viewsRouter) // cambiar direcciones para que sea mas legible
 app.use("/user", userRouter)
 app.use("/session", sessionRouter)
+app.use("/api/carts", cartRouter)
 
 
 
