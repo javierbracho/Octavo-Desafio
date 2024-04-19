@@ -30,7 +30,14 @@ const userSchema = mongoose.Schema({
         default: "user"
     },
 
+    cart: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "carts"
+    }
 })
-
+userSchema.pre('findOne', function (next) {
+    this.populate('cart', '_id');
+    next();
+  });
 const userModel = mongoose.model("users", userSchema)
 export default userModel

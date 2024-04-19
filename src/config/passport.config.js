@@ -1,6 +1,7 @@
 import passport from "passport";
 import local from "passport-local"
 import userModel from "../models/user.model.js"
+import cartModel from "../models/cart.model.js"
 import hashbcrypt from "../utils/hashbcrypt.js"
 
 const { createHash, validPassword } = hashbcrypt;
@@ -14,14 +15,19 @@ const initializePassport = () => {
         const {first_name, last_name, email, age} = req.body;
         try {
             const findUser = await userModel.findOne({email: email})
-            if (findUser) return done (null, false)
+                if (findUser) return done (null, false)
+
+            const newCart = new cartModel()
+            await newCart.save()
 
             const newUser = {
                 first_name,
                 last_name,
                 email,
                 age,               
-                password: createHash(password)
+                password: createHash(password),
+                cart: newCart._id,
+
             }
             const result = await userModel.create(newUser)
             return done (null, result) 
