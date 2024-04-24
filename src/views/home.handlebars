@@ -1,22 +1,114 @@
-<h1>Esto es el home</h1>
-<div class="container mt-5">
-    <h2 class="text-center">Inicio de Sesión</h2>
-        {{#if error}}
-        <div class="alert alert-danger" role="alert">
-            {{ error }}
+<div class="container-menu">
+    <nav class="navbar navbar-transparent border-body" data-bs-theme="dark">
+      <div class="container-fluid">
+        <div class="img-brand">
+         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Peugeot_Logo.svg/1865px-Peugeot_Logo.svg.png" class="img-fluid"alt="logoPeugeot">
+
         </div>
-    {{/if}}
-    <form id="loginForm" action="/session/login" method="POST">
-        <div class="mb-3"> 
-            <label for="email" class="form-label">Email:</label> 
-            <input type="email" class="form-control" id="username" name="email" required> 
+        <a class="navbar-brand" href="">Peugeot</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-link active" aria-current="page" href="/products">Modelos</a>
+            <a class="nav-link" href="/profile">Profile</a>
+            <a class="nav-link" href="/login">Login</a>
+          </div>
         </div>
-        <div class="mb-3"> 
-            <label for="password" class="form-label">Password:</label> 
-            <input type="password" class="form-control" id="password" name="password" required> 
-        </div> 
-        <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
-    </form>
-    <BR>
-    <a href="/home/register"><button>Register</button></a>
+      </div>
+    </nav>
 </div>
+
+<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <div class="card-group">
+        <div class="card">
+          <img src="https://brxcdn.com/exp-app-storage/059e1f94-9967-11e7-88a7-141877340e97/media/original/dee23f6e-f069-11ee-a173-268038ee1d60" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">New 208</h5>
+            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+          </div>
+          <div class="card-footer">
+            <small class="text-body-secondary">Last updated 3 mins ago</small>
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://brxcdn.com/exp-app-storage/059e1f94-9967-11e7-88a7-141877340e97/media/original/f3230284-3ddb-11ed-bf18-5ee9106561b9" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">New 308</h5>
+            <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+          </div>
+          <div class="card-footer">
+            <small class="text-body-secondary">Last updated 3 mins ago</small>
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://brxcdn.com/exp-app-storage/059e1f94-9967-11e7-88a7-141877340e97/media/original/57e73c0c-f281-11ee-97c7-8ae35e9aeb36" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">New 2008</h5>
+            <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+          </div>
+          <div class="card-footer">
+            <small class="text-body-secondary">Last updated 3 mins ago</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+  </button>
+    <div class="carousel-item">
+      <div class="card-group">
+        <div class="card">
+          <img src="https://cotizador.peugeot.cl/cl/media/modelos/thumb-nueva-landtrek.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">New landtrek</h5>
+            <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+          </div>
+          <div class="card-footer">
+            <small class="text-body-secondary">Last updated 3 mins ago</small>
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://brxcdn.com/exp-app-storage/059e1f94-9967-11e7-88a7-141877340e97/media/original/e85ae712-f2c6-11ee-80c4-862b054774b2" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">3008</h5>
+            <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+          </div>
+          <div class="card-footer">
+            <small class="text-body-secondary">Last updated 3 mins ago</small>
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://cotizador.peugeot.cl/cl/media/modelos/Nuevo_5008.png" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">5008</h5>
+            <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+          </div>
+          <div class="card-footer">
+            <small class="text-body-secondary">Last updated 3 mins ago</small>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+
+

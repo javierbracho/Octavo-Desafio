@@ -1,0 +1,57 @@
+<nav class="navbar navbar-dark bg-dark border-body" data-bs-theme="dark">     
+        <div class="container-fluid">
+            <div class="img-brand">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Peugeot_Logo.svg/1865px-Peugeot_Logo.svg.png" class="img-fluid"alt="logoPeugeot">
+
+            </div>
+            <a class="navbar-brand" href="/">Peugeot</a>
+            <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+            >
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link active" aria-current="page" href="/products">Modelos</a>
+                <a class="nav-link" href="/profile">Profile</a>
+                <a class="nav-link" href="/login">Login</a>
+            </div>
+            </div>
+        </div>
+</nav> <a href="/session/logout">Logout</a>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Carrito</h5>
+                </div>
+                <div class="card-body">
+                    {{#each products}}
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title text-dark">{{productName}}</h5>
+                            <hr>
+                            <p class="card-text">Precio: ${{price}}</p>
+                            <p class="card-text">Cantidad: {{quantity}}</p>
+                            <button class="btn btn-danger delete-product-btn" data-cart-id="{{cartId}}" data-product-id="{{productId}}">Eliminar</button>
+                        </div>
+                    </div>
+                    <button id="vaciar-carrito-btn" class="btn btn-warning" data-cart-id="{{cartId}}">Vaciar Carrito</button>
+                    {{/each}}
+                    <!-- Botón para vaciar carrito -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/js/cart.js"></script>

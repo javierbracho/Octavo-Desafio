@@ -12,6 +12,9 @@ class userController {
                 last_name: req.user.last_name,
                 age: req.user.age,
                 email: req.user.email,
+                cartId: req.user.cart,
+                role: req.session.user.role
+
             };
             req.session.login = true;
             res.redirect("/products");

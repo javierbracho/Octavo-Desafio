@@ -12,11 +12,13 @@ class ProductController {
                 limit: parseInt(req.query.limit) || 10,
                 page: parseInt(req.query.page) || 1
             };
+            const carritoId = req.session.user.cartId ? req.session.user.cartId._id : null;
             const products = await productRepository.getProducts(options);
             const finalProducts = products.docs.map(product => {
                 const { _id, ...rest } = product.toObject();
-                return { ...rest, _id: _id.toString() };
+                return { ...rest, _id: _id.toString(), cartId: carritoId };
             });
+            
             res.render("products", {
                 status: "success",
                 payload: finalProducts,
@@ -29,6 +31,7 @@ class ProductController {
                 prevLink: products.prevPage,
                 nextLink: products.nextPage,
                 limit: products.limit,
+                cartId: carritoId
             });
         } catch (error) {
             res.status(500).json("Error en el servidor");

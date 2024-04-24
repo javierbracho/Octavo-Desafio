@@ -17,7 +17,25 @@ class cartController {
         const cartId = req.params.cid
         try {
             const products = await CartRepository.getCartById(cartId)
-            res.json(products)
+            
+            const finalProducts = products.products.map(item => {
+                const { product, quantity } = item;
+                return {
+                    productId: product._id.toString(),
+                    productName: product.title,
+                    price: product.price,
+                    quantity: quantity,
+                    cartId: cartId
+                };
+            });
+
+            res.render("cart",{
+                products: finalProducts
+            })
+
+
+
+
         } catch (error) {
             res.status(500).json("Error en el servidor");
             console.log("error al crear carrito", error)
@@ -39,8 +57,6 @@ class cartController {
             
         }
     }
-    //  const userCart = (req.user.cart).toString()
-
     async deleteProduct (req, res) {
         const cartId = req.params.cid
         const productId = req.params.pid
@@ -99,7 +115,7 @@ class cartController {
         try {
             const cart = await CartRepository.emptyCart(cartId)
             res.json({
-                Status: "Sucess",
+                Status: "Success",
                 Message: "Carrito vaciado exitosamente",
                 cart
             })
