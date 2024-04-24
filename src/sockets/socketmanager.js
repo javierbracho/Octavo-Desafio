@@ -1,5 +1,8 @@
 import { Server } from "socket.io";
 import messagesModel from "../models/messages.js";
+import productRepository from "../repositories/product.repository.js"
+
+const ProductRepository = new productRepository()
 
 class SocketManager {
     constructor(HttpServer) {
@@ -10,8 +13,20 @@ class SocketManager {
         this.io.on("connection", async (socket) => {
             console.log("Se conectó un usuario");
 
+            socket.emit("productos", await ProductRepository.getProducts({}));
+
+            socket.on("eliminarProducto", async (id) => {
+                await ProductRepository.deleteProduct(id);
+                this.emitUpdatedProducts(socket);
+            });
+
+            socket.on("agregarProducto", async (producto) => {
+                await ProductRepository.addProduct(producto);
+                this.emitUpdatedProducts(socket);
+            });
 
 
+            //Chatbox
             const messages = await messagesModel.find();
             socket.emit("messages", messages);
 
@@ -21,6 +36,9 @@ class SocketManager {
                 io.sockets.emit("messages", updatedMessages);
               });
         })
+    }
+    async emitUpdatedProducts(socket) {
+        socket.emit("productos", await ProductRepository.getProducts({}));
     }
 }
 

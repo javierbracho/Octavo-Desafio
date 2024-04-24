@@ -51,9 +51,21 @@
         </div>
     </div>
 </div>
-<div class="d-flex justify-content-center">
-    <a href="/chat" class="btn btn-primary mt-4">Ir a chat</a>
-</div>
-<div class="d-flex justify-content-center">
-    <a href="/api/carts/{{cartId}}" class="btn btn-primary mt-4">Ir al carrito</a>
-</div>
+
+{{#ifEqual role "user"}}
+    <!-- Enlaces para el rol de usuario -->
+    <div class="d-flex justify-content-center">
+        <a href="/chat" class="btn btn-primary mt-4">Ir a chat</a>
+    </div>
+    <div class="d-flex justify-content-center">
+        <a href="/api/carts/{{cartId}}" class="btn btn-primary mt-4">Ir al carrito</a>
+    </div>
+{{else}}
+    <!-- Enlace alternativo -->
+    <div class="d-flex justify-content-center">
+        <a href="/realtime" class="btn btn-primary mt-4">Ingresar / Modificar productos</a>
+    </div>
+{{/ifEqual}}
+
+ <a href="/session/logout">Logout</a>
+

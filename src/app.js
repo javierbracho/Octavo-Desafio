@@ -13,6 +13,7 @@ import userRouter from "./routes/user.router.js"
 import sessionRouter from "./routes/session.router.js"
 import cartRouter from "./routes/cart.router.js"
 import SocketManager from "./sockets/socketmanager.js";
+import helper from "./utils/handlebarsHelper.js"
 
 //Constantes
 //conexion puerto
@@ -40,7 +41,11 @@ app.use(session ({
 }))
 
 //handlebars
-app.engine("handlebars", ExpressHandlebars.engine())
+app.engine("handlebars", ExpressHandlebars.engine({
+    helpers:{
+        ifEqual: helper
+    }
+}))
 app.set("view engine", "handlebars")
 app.set("views", "./src/views")
 

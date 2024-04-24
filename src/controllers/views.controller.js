@@ -86,7 +86,6 @@ class ViewsController {
                     cartId: req.session.user.cartId._id,
                     role: req.session.user.role
                 })
-                console.log(req.session.user)
             } else {
                 res.redirect("/login")
             }
@@ -97,10 +96,15 @@ class ViewsController {
 
     async realtime ( req,res ) {
         try {
-            if(req.session && req.session.user.role === "admin"){
-                res.render("realtime")
+            if(req.session && req.session.login){
+                if(req.session.user.role === "admin"){
+                    res.render("realtime")
+                    
+                } else {
+                    res.send("No tienes permiso")
+                }
             } else {
-                res.send("No tienes permiso")
+                res.redirect("/login")
             }
         } catch (error) {
             
