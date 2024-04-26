@@ -1,3 +1,6 @@
+import userDto from "../dto/user.dto.js";
+
+
 class ViewsController {
     async cargarHome (req, res) {
         try {
@@ -74,23 +77,27 @@ class ViewsController {
         }
     }
 
-    async profile (req, res) {
-        try {
-            if(req.session && req.session.login) {
-                res.render("profile", {
-                    firstName: req.session.user.first_name,
-                    lastName: req.session.user.last_name,
-                    email: req.session.user.email,
-                    cartId: req.session.user.cartId._id,
-                    role: req.session.user.role
-                })
-            } else {
-                res.redirect("/login")
-            }
-        } catch (error) {
-            
+async profile(req, res) {
+    try {
+        if (req.session && req.session.login) {
+            const userSessionDto = new userDto(
+                req.session.user.first_name,
+                req.session.user.last_name,
+                req.session.user.email,
+                req.session.user.role,
+                req.session.user.cartId._id
+            );
+
+            console.log(req.session.user)
+            res.render("profile", { userDto: userSessionDto });
+        } else {
+            res.redirect("/login");
         }
+    } catch (error) {
+        console.error('Error al cargar el perfil:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
     }
+}
 
     async realtime ( req,res ) {
         try {
