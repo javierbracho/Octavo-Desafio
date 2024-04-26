@@ -1,6 +1,13 @@
 import cartRepository from "../repositories/cart.repository.js";
+import productRepository from "../repositories/product.repository.js"
+import userModel from "../models/user.model.js"
+import ticketModel from "../models/ticket.model.js"
+import cartUtils from "../utils/cartUtils.js";
+
+const {generateUniqueCode, calcularTotal} = cartUtils
 
 const CartRepository = new cartRepository()
+const ProductRepository = new productRepository()
 
 class cartController {
     async newCart (req,res) {
@@ -126,6 +133,44 @@ class cartController {
 
         }
     }
+
+    async checkout (req, res) {
+        const cartId = req.params.cid
+        try {
+            const cart = await CartRepository.getCartById(cartId)
+            const products = cart.products
+
+            const withoutStock = []
+            for (const item of products) {
+                const productId = item.product
+                const product = await ProductRepository.getProductById(productId)
+                if(product.stock >= item.quantity) {
+                    product.stock -= item.quantity
+                    await product.save()
+                } else {
+                    withoutStock.push(productId)
+                }
+            }
+
+            const userCart = await userModel.findOne({cart: cartId})
+
+            const ticket = new ticketModel({
+                code: generateUniqueCode(),
+                purchase_datetime: new Date(),
+                amount: calcularTotal(cart.products),
+                purchaser: userCart._id
+            })
+            await ticket.save()
+            cart.products = cart.products.filter(item => withoutStock.some(productId => productId.equals(item.product)));
+            await cart.save()
+
+            res.status(200).json({ withoutStock });
+
+        } catch (error) {
+            console.error('Error al procesar la compra:', error);
+            res.status(500).json({ error: 'Error interno del servidor' });
+        }
+    } 
 }
 
 export default cartController

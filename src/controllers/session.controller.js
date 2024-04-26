@@ -16,7 +16,6 @@ class sessionController {
                     cartId: req.user.cart,
                     role: req.user.role
                   };
-              
                   req.session.login = true;
                   res.redirect("/profile");
             } catch (error) {

@@ -50,7 +50,7 @@ class ViewsController {
 
     async cargarCart ( req, res, next) {
         try {
-            if (req.session && req.session.user.role === "user") {
+            if (req.session && req.session.user && req.session.user.role === "user") {
                 next ()
             } else {
                 res.send("Sin autorizacion, debes iniciar sesion como USUARIO")
@@ -61,18 +61,16 @@ class ViewsController {
         }
     }
 
-    async chat (req, res) {
+    async chat(req, res) {
         try {
-            if (req.session && req.session.user.role === "user") {
-                next ()
+            if (req.session && req.session.user && req.session.user.role === "user") {
+                res.render("chat")
             } else {
-                res.send("Sin autorizacion, debes iniciar sesion como USUARIO")
-
+                res.send("Sin autorización, debes iniciar sesión como USUARIO");
             }
-
         } catch (error) {
+            console.error("Error en el middleware de autorización:", error);
             res.status(500).json("Error en el servidor");
-
         }
     }
 
