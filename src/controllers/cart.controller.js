@@ -37,7 +37,8 @@ class cartController {
             });
 
             res.render("cart",{
-                products: finalProducts
+                products: finalProducts,
+                cartId: cartId
             })
 
 
@@ -164,7 +165,7 @@ class cartController {
             cart.products = cart.products.filter(item => withoutStock.some(productId => productId.equals(item.product)));
             await cart.save()
 
-            res.status(200).json({ withoutStock });
+            res.status(200).json({ ticket });
 
         } catch (error) {
             console.error('Error al procesar la compra:', error);
