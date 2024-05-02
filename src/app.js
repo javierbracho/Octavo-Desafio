@@ -14,6 +14,7 @@ import sessionRouter from "./routes/session.router.js"
 import cartRouter from "./routes/cart.router.js"
 import SocketManager from "./sockets/socketmanager.js";
 import helper from "./utils/handlebarsHelper.js"
+import mockingRouter from "./routes/faker.router.js";
 
 //Constantes
 //conexion puerto
@@ -56,6 +57,7 @@ app.use("/api/products", productsRouter)
 app.use("/user", userRouter)
 app.use("/session", sessionRouter)
 app.use("/api/carts", cartRouter)
+app.use("/mockingproducts", mockingRouter)
 
 
 
