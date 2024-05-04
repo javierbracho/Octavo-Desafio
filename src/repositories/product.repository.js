@@ -1,7 +1,7 @@
 import productModel from "../models/product.model.js"
 import customError from "../services/errors/custom-error.js";
 import EErrors from "../services/errors/enums.js"
-import generateProductsErrorInfo from "../services/errors/info.js"
+import {generateProductsErrorInfo , generateProductsErrorCode}  from "../services/errors/info.js"
 
 class ProductRepository {
     async getProducts(options) {
@@ -36,7 +36,7 @@ class ProductRepository {
                 throw customError.createError({
                     nombre: "nuevo producto",
                     causa: generateProductsErrorInfo({title, description, price, code, stock, details , category}),
-                    mensaje: "Error al crear un nuevo producto",
+                    mensaje: "Error al crear un nuevo producto por falta o uso incorrecto al ingresar datos",
                     codigo: EErrors.TIPO_INVALIDO
                 })
             }
@@ -44,8 +44,12 @@ class ProductRepository {
             const existeProducto = await productModel.findOne({code: code})
             
             if (existeProducto) {
-                console.log("el código debe ser único")
-                return
+                throw customError.createError({
+                    nombre: "Codigo en uso, modificar",
+                    causa: generateProductsErrorCode({code}),
+                    mensaje: "Error al crear un nuevo producto por ingresar codigo que actualmente esta en uso",
+                    codigo: EErrors.TIPO_INVALIDO
+                })
             }
             const nuevoProducto = new productModel ({
                 title,

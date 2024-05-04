@@ -10,4 +10,10 @@ const generateProductsErrorInfo = (product) => {
     -category: Debe ser un string, pero recibimos ${product.category}`
 }
 
-export default generateProductsErrorInfo
+const generateProductsErrorCode = (product) =>{
+    return `El codigo del producto debe ser unico y actualmente se encuentra en uso por otro producto el ingresado
+    Por favor modificalo por alguno distinto, has ingresado:
+    -Code: ${product.code} ACTUALMENTE EN USO, MODIFICAR`
+}
+
+export  {generateProductsErrorInfo, generateProductsErrorCode}
