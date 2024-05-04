@@ -1,4 +1,5 @@
 import Express  from "express";
+import compression from "express-compression";
 import database from "../src/database.js"
 import productsRouter from "./routes/products.router.js"
 import  ExpressHandlebars  from "express-handlebars";
@@ -15,6 +16,7 @@ import cartRouter from "./routes/cart.router.js"
 import SocketManager from "./sockets/socketmanager.js";
 import helper from "./utils/handlebarsHelper.js"
 import mockingRouter from "./routes/faker.router.js";
+import manejadorErrores from "./middleware/error.js";
 
 //Constantes
 //conexion puerto
@@ -29,6 +31,7 @@ app.use(Express.json())
 app.use(Express.urlencoded({extended:true}))
 app.use(Express.static("./src/public"))
 app.use(cookieParser())
+app.use(compression())
 
 //Cargar session
 app.use(session ({
@@ -58,6 +61,7 @@ app.use("/user", userRouter)
 app.use("/session", sessionRouter)
 app.use("/api/carts", cartRouter)
 app.use("/mockingproducts", mockingRouter)
+app.use(manejadorErrores)
 
 
 

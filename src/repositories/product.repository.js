@@ -1,4 +1,7 @@
 import productModel from "../models/product.model.js"
+import customError from "../services/errors/custom-error.js";
+import EErrors from "../services/errors/enums.js"
+import generateProductsErrorInfo from "../services/errors/info.js"
 
 class ProductRepository {
     async getProducts(options) {
@@ -29,9 +32,13 @@ class ProductRepository {
     async addProduct({title, description, price, thumbnail, code, stock, category, details})
     {
         try {
-            if(!title || !description || !price || !thumbnail || !code || !stock|| !details) {
-                console.log ("Debes ingregar todos los campos")
-                return
+            if(!title || !description || !price || !thumbnail || !code || !stock|| !category || !details ) {
+                throw customError.createError({
+                    nombre: "nuevo producto",
+                    causa: generateProductsErrorInfo({title, description, price, code, stock, details , category}),
+                    mensaje: "Error al crear un nuevo producto",
+                    codigo: EErrors.TIPO_INVALIDO
+                })
             }
             
             const existeProducto = await productModel.findOne({code: code})
@@ -56,7 +63,7 @@ class ProductRepository {
             await nuevoProducto.save()
                  
         }  catch (error) {
-            throw new Error("Error al crear automóvil:" + error);
+            throw error;
         }
     }
     async deleteProduct (id) {
