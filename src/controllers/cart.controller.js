@@ -3,6 +3,7 @@ import productRepository from "../repositories/product.repository.js"
 import userModel from "../models/user.model.js"
 import ticketModel from "../models/ticket.model.js"
 import cartUtils from "../utils/cartUtils.js";
+import {logger} from "../utils/logger.js"
 
 const {generateUniqueCode, calcularTotal} = cartUtils
 
@@ -16,7 +17,7 @@ class cartController {
             res.json(newCart)
         } catch (error) {
             res.status(500).json("Error en el servidor");
-            console.log("error al crear carrito", error)
+            logger.fatal("error al crear carrito", error)
         }
     }
 
@@ -40,14 +41,10 @@ class cartController {
                 products: finalProducts,
                 cartId: cartId
             })
-
-
-
-
+            
         } catch (error) {
             res.status(500).json("Error en el servidor");
-            console.log("error al crear carrito", error)
- 
+            logger.error("error al crear carrito", error)
         }
     }
 
@@ -61,7 +58,7 @@ class cartController {
             
         } catch (error) {
             res.status(500).json("Error en el servidor");
-            console.log("error al agregar producto al carrito", error)
+            logger.warning("error al agregar producto al carrito", error)
             
         }
     }
@@ -77,7 +74,7 @@ class cartController {
             })
         } catch (error) {
             res.status(500).json("Error en el servidor");
-            console.log("error al borrar producto del carrito", error)
+            logger.warning("error al borrar producto del carrito", error)
 
         }
     }
@@ -95,7 +92,7 @@ class cartController {
             })
         } catch (error) {
             res.status(500).json("Error en el servidor");
-            console.log("error al actualizar cantidades de producto para el carrito", error)
+            logger.warning("error al actualizar cantidades de producto para el carrito", error)
 
         }
     }
@@ -113,7 +110,7 @@ class cartController {
             
         } catch (error) {
             res.status(500).json("Error en el servidor");
-            console.log("error al actualizar productos para el carrito", error)
+            logger.warning("error al actualizar productos para el carrito", error)
 
         }
     }
@@ -168,7 +165,7 @@ class cartController {
             res.status(200).json({ ticket });
 
         } catch (error) {
-            console.error('Error al procesar la compra:', error);
+            logger.warning('Error al procesar la compra:', error);
             res.status(500).json({ error: 'Error interno del servidor' });
         }
     } 

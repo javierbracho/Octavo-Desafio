@@ -9,7 +9,8 @@
 
  const configObject = {
     mongo_url: process.env.MONGO_URL,
-    mongo_pass: process.env.MONGO_PASS
+    mongo_pass: process.env.MONGO_PASS,
+    log_level: process.env.LOG_LEVEL
  }
 
  export default configObject
