@@ -32,7 +32,7 @@
             {{ error }}
         </div>
     {{/if}}
-    <form id="loginForm" action="/session/login" method="POST">
+    <form id="loginForm" action="/session/login" method="POST" class="mb-3">
         <div class="mb-3"> 
             <label for="email" class="form-label">Email:</label> 
             <input type="email" class="form-control" id="username" name="email" required> 
@@ -43,6 +43,8 @@
         </div> 
         <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
     </form>
-    <BR>
-    <a href="/register"><button>Register</button></a>
-</div>  
+    <div class="d-flex flex-column">
+        <a href="/register"><button class="btn btn-primary mb-3">Register</button></a>
+        <a href="/reset-password"> <button class="btn btn-primary mb-3"> Reestablecer contraseña</button></a>
+    </div>
+</div>      

@@ -162,7 +162,7 @@ class cartController {
             cart.products = cart.products.filter(item => withoutStock.some(productId => productId.equals(item.product)));
             await cart.save()
 
-            res.status(200).json({ ticket });
+            res.status(200).json({ ticket }); // agregar renderizado de vista y enviar correo con la compra
 
         } catch (error) {
             logger.warning('Error al procesar la compra:', error);

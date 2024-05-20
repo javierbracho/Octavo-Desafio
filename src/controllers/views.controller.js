@@ -122,6 +122,19 @@ async profile(req, res) {
         }
     }
 
+    async renderResetPassword(req, res) {
+        res.render("passwordreset");
+    }
+
+    async renderCambioPassword(req, res) {
+        res.render("formulario-Cambio-Password");
+    }
+
+    async renderConfirmacion(req, res) {
+        res.render("confirmacion-Request-Password");
+    }
+
+
 }
 
 export default ViewsController

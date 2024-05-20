@@ -7,5 +7,7 @@ const sessionController = new SessionController()
 router.post("/login", sessionController.login)
 router.get("/faillogin", sessionController.faillogin)
 router.get("/logout", sessionController.logout)
+router.post("/requestpasswordreset", sessionController.requestPasswordReset)
+router.post("/reset-password", sessionController.resetPassword)
 
 export default router
