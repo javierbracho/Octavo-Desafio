@@ -1,4 +1,5 @@
 import cartModel from "../models/cart.model.js"
+import productModel from "../models/product.model.js"
 
 class CartRepository {
     async cartCreate () {
@@ -26,25 +27,36 @@ class CartRepository {
         }
     }
 
-    async addProduct (cartId, productId, quantity = 1) {
+    async addProduct(cartId, productId, quantity = 1, role, email) {
         try {
-            const cart = await this.getCartById(cartId)
-            const productExist = cart.products.find(item => item.product._id.toString()===productId)
-                if (productExist) {
-                    productExist.quantity += quantity;
-                } else {
-                    cart.products.push({ product: productId, quantity });
-                }
-
-                cart.markModified("products")
-                await cart.save()
-                return cart
-
+            const cart = await this.getCartById(cartId);
+            const productExist = cart.products.find(item => item.product._id.toString() === productId);
+            
+            const product = await productModel.findById(productId);
+            if (!product) {
+                throw new Error("Producto no encontrado");
+            }
+    
+            if (role === "premium" && product.owner === email) {
+                return { error: "No puedes agregar al carrito tu propio producto" }         
+               }
+    
+            if (productExist) {
+                productExist.quantity += quantity;
+            } else {
+                cart.products.push({ product: productId, quantity });
+            }
+    
+            cart.markModified("products");
+            await cart.save();
+            return cart;
+    
         } catch (error) {
-            console.log("error al agregar productos", error)
+            console.log("error al agregar productos", error);
             throw error;
         }
     }
+    
 
     async deleteProduct (cartId, productId, ) {
         try {

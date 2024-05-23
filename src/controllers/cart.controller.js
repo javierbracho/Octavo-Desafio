@@ -48,20 +48,27 @@ class cartController {
         }
     }
 
-    async addProduct ( req, res) {
-        const cartId = req.params.cid
-        const productId = req.params.pid
-        const quantity = req.body.quantity || 1
+    async addProduct(req, res) {
+        const cartId = req.params.cid;
+        const productId = req.params.pid;
+        const quantity = req.body.quantity || 1;
+        const role = req.session.user.role;
+        const email = req.session.user.email;
+    
         try {
-            await CartRepository.addProduct(cartId, productId, quantity)
-            res.send("Producto agregado")
-            
+            const result = await CartRepository.addProduct(cartId, productId, quantity, role, email);
+                if (result.error) {
+                    return res.status(400).json({ error: result.error });
+                }
+    
+            res.send("Producto agregado");
         } catch (error) {
             res.status(500).json("Error en el servidor");
-            logger.warning("error al agregar producto al carrito", error)
-            
+            logger.warning("error al agregar producto al carrito", error);
         }
     }
+    
+    
     async deleteProduct (req, res) {
         const cartId = req.params.cid
         const productId = req.params.pid
