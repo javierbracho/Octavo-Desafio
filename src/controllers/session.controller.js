@@ -117,6 +117,25 @@ class sessionController {
             logger.error("Error al ejecutar funcion de cambio de contraseña en el servidor", error)
         }
     }
+
+    async changeRole (req, res) {
+        const {uid} = req.params
+        try {
+            const user = await userModel.findById(uid)
+            if (!user) {
+                return res.status(404).send("Usuario no encontrado")
+            }
+
+            const newRol = user.role === "user" ? "premium" : "user"
+            const updated = await userModel.findByIdAndUpdate(uid, {role: newRol}, {new: true});
+            res.json (updated)
+            
+        } catch (error) {
+            res.status(500).send({ status: "error", message: "Error en el servidor" });
+            logger.error("Error al ejecutar funcion de cambio de role en el servidor", error)
+
+        }
+    }
 }
 
 export default sessionController

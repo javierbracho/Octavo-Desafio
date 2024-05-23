@@ -53,6 +53,11 @@ const productSchema = new mongoose.Schema({
         required: true,
       },
     },
+    owner: {
+      type: String,
+      required: true,
+      default: "admin",
+    }
   });
 
 productSchema.plugin(mongoosePaginate)  

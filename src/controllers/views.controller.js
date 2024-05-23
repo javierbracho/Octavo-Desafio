@@ -106,8 +106,8 @@ async profile(req, res) {
     async realtime ( req,res ) {
         try {
             if(req.session && req.session.login){
-                if(req.session.user.role === "admin"){
-                    res.render("realtime")
+                if(req.session.user.role === "admin" || req.session.user.role === "premium"){
+                    res.render("realtime", {role: req.session.user.role, email: req.session.user.email}) //simplificar
                     
                 } else {
                     res.send("No tienes permiso")

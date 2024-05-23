@@ -29,7 +29,7 @@ class ProductRepository {
         }
     }
 
-    async addProduct({title, description, price, thumbnail, code, stock, category, details})
+    async addProduct({title, description, price, thumbnail, code, stock, category, details, owner})
     {
         try {
             if(!title || !description || !price || !thumbnail || !code || !stock|| !category || !details ) {
@@ -60,7 +60,8 @@ class ProductRepository {
                 stock,
                 status: true,
                 category,
-                details
+                details,
+                owner
                 
             });
 

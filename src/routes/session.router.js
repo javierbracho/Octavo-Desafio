@@ -9,5 +9,6 @@ router.get("/faillogin", sessionController.faillogin)
 router.get("/logout", sessionController.logout)
 router.post("/requestpasswordreset", sessionController.requestPasswordReset)
 router.post("/reset-password", sessionController.resetPassword)
+router.put("/premium/:uid", sessionController.changeRole)
 
 export default router

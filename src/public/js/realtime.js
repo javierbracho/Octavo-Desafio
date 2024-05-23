@@ -1,4 +1,6 @@
 const socket = io ()
+const role = document.getElementById("role").textContent.trim();
+const email = document.getElementById("email").textContent.trim();
 
 socket.on("productos", (data) => {
     renderProductos(data);
@@ -42,6 +44,11 @@ document.getElementById("btnEnviar").addEventListener("click", () => {
 
 
 const agregarProducto = () => {
+    const role = document.getElementById("role").textContent.trim();
+    const email = document.getElementById("email").textContent.trim();
+    
+    const owner = role === "premium" ? email : "admin";
+           
     const producto = {
         title: document.getElementById("title").value,
         description: document.getElementById("description").value,
@@ -56,7 +63,8 @@ const agregarProducto = () => {
             engine: document.getElementById("engine").value,
             transmission: document.getElementById("transmission").value,
             drivetrain: document.getElementById("drivetrain").value
-        }
+        },
+        owner
 
     };
     mostrarMensaje("Producto agregado correctamente");
