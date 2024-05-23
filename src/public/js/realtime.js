@@ -24,10 +24,20 @@ const renderProductos = (productos) => {
                 </div>
             </div>
         `;
+//Acá arriba en el card podemos mostrar quien creo el producto o en su defecto quien es el vendedor
 
         contenedorProductos.appendChild(card);
         card.querySelector("button").addEventListener("click", () => {
-            eliminarProducto(item._id);
+            if (role === "premium" && item.owner === email) {
+                eliminarProducto(item._id)
+            } else if (role ==="admin"){
+                eliminarProducto(item._id)
+            } else {
+                Swal.fire({
+                    title: "Error",
+                    text: "No tienes autorizacion para borrar este producto"
+                })
+            }
         });
     });
 };
@@ -74,7 +84,7 @@ const agregarProducto = () => {
 }
 
 const mostrarMensaje = (mensaje) => {
-    alert(mensaje);
+    alert(mensaje); //Simplificar para trabajar todo en el entorno de Swal
 };
 
 const limpiarCampos = () => {
