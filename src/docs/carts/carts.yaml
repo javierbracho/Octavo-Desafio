@@ -3,15 +3,22 @@ info:
   title: "Documentacion de la aplicacion Peugeot"
   description: "Aplicacion web de un concesionario de autos, marca Peugeot"
   version: "1.0.0"
+tags:
+  - name: "Carritos"
+    description: "Operaciones relacionadas con los carritos de compras"
 paths:
   /api/carts:
     post:
+      tags:
+        - Carritos
       summary: "Crear un nuevo carrito"
       responses:
         '200':
           description: "Carrito creado exitosamente"
   /api/carts/{cid}:
     get:
+      tags:
+        - Carritos
       summary: "Obtener carrito por ID"
       parameters:
         - in: path
@@ -24,6 +31,8 @@ paths:
         '200':
           description: "Detalles del carrito"
     delete:
+      tags:
+        - Carritos
       summary: "Vaciar el carrito"
       parameters:
         - in: path
@@ -37,6 +46,8 @@ paths:
           description: "Carrito vaciado exitosamente"
   /api/carts/{cid}/product/{pid}:
     post:
+      tags:
+        - Carritos
       summary: "Agregar producto al carrito"
       parameters:
         - in: path
@@ -66,6 +77,8 @@ paths:
         '200':
           description: "Producto agregado exitosamente"
     delete:
+      tags:
+        - Carritos
       summary: "Eliminar producto del carrito"
       parameters:
         - in: path
@@ -84,6 +97,8 @@ paths:
         '200':
           description: "Producto eliminado exitosamente"
     put:
+      tags:
+        - Carritos
       summary: "Actualizar cantidad de producto en el carrito"
       parameters:
         - in: path
@@ -114,6 +129,8 @@ paths:
           description: "Cantidad de producto actualizada exitosamente"
   /api/carts/{cid}/purchase:
     post:
+      tags:
+        - Carritos
       summary: "Realizar la compra del carrito"
       parameters:
         - in: path

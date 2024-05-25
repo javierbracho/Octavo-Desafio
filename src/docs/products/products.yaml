@@ -1,0 +1,218 @@
+openapi: 3.0.1
+info:
+  title: "Documentación de la API de Productos"
+  description: "API para gestionar los productos en la aplicación Peugeot"
+  version: "1.0.0"
+
+paths:
+  /products:
+    get:
+      summary: "Obtener todos los productos"
+      tags:
+        - "Productos"
+      parameters:
+        - in: query
+          name: sort
+          schema:
+            type: string
+          description: "Ordenar por precio ('asc' o 'desc')"
+        - in: query
+          name: category
+          schema:
+            type: string
+          description: "Filtrar por categoría"
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          description: "Número de productos por página"
+        - in: query
+          name: page
+          schema:
+            type: integer
+          description: "Número de página"
+      responses:
+        '200':
+          description: "Lista de productos"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  payload:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
+                  totalPages:
+                    type: integer
+                  prevPages:
+                    type: integer
+                  nextPages:
+                    type: integer
+                  pages:
+                    type: integer
+                  hasPrevPages:
+                    type: boolean
+                  hasNextPages:
+                    type: boolean
+                  prevLink:
+                    type: string
+                  nextLink:
+                    type: string
+                  limit:
+                    type: integer
+                  cartId:
+                    type: string
+        '500':
+          description: "Error en el servidor"
+
+    post:
+      summary: "Agregar un nuevo producto"
+      tags:
+        - "Productos"
+      requestBody:
+        description: "Datos del nuevo producto"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewProduct'
+      responses:
+        '200':
+          description: "Producto creado"
+        '500':
+          description: "Error en el servidor"
+
+  /products/{pid}:
+    get:
+      summary: "Obtener producto por ID"
+      tags:
+        - "Productos"
+      parameters:
+        - in: path
+          name: pid
+          required: true
+          schema:
+            type: string
+          description: "ID del producto"
+      responses:
+        '200':
+          description: "Detalles del producto"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '500':
+          description: "Error en el servidor"
+
+    delete:
+      summary: "Eliminar producto por ID"
+      tags:
+        - "Productos"
+      parameters:
+        - in: path
+          name: pid
+          required: true
+          schema:
+            type: string
+          description: "ID del producto"
+      responses:
+        '200':
+          description: "Producto eliminado de forma correcta"
+        '500':
+          description: "Error en el servidor"
+
+    put:
+      summary: "Actualizar producto por ID"
+      tags:
+        - "Productos"
+      parameters:
+        - in: path
+          name: pid
+          required: true
+          schema:
+            type: string
+          description: "ID del producto"
+      requestBody:
+        description: "Datos actualizados del producto"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewProduct'
+      responses:
+        '200':
+          description: "Producto actualizado de manera correcta"
+        '500':
+          description: "Error en el servidor"
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        _id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+        thumbnail:
+          type: string
+        code:
+          type: string
+        stock:
+          type: number
+        status:
+          type: boolean
+        category:
+          type: string
+        details:
+          type: object
+          properties:
+            year:
+              type: number
+            engine:
+              type: string
+            transmission:
+              type: string
+            drivetrain:
+              type: string
+        owner:
+          type: string
+
+    NewProduct:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+        thumbnail:
+          type: string
+        code:
+          type: string
+        stock:
+          type: number
+        category:
+          type: string
+        details:
+          type: object
+          properties:
+            year:
+              type: number
+            engine:
+              type: string
+            transmission:
+              type: string
+            drivetrain:
+              type: string
+        owner:
+          type: string
+          default: "admin"
