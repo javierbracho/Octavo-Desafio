@@ -1,0 +1,127 @@
+openapi: 3.0.1
+info:
+  title: "Documentacion de la aplicacion Peugeot"
+  description: "Aplicacion web de un concesionario de autos, marca Peugeot"
+  version: "1.0.0"
+paths:
+  /api/carts:
+    post:
+      summary: "Crear un nuevo carrito"
+      responses:
+        '200':
+          description: "Carrito creado exitosamente"
+  /api/carts/{cid}:
+    get:
+      summary: "Obtener carrito por ID"
+      parameters:
+        - in: path
+          name: cid
+          schema:
+            type: string
+          required: true
+          description: "ID del carrito"
+      responses:
+        '200':
+          description: "Detalles del carrito"
+    delete:
+      summary: "Vaciar el carrito"
+      parameters:
+        - in: path
+          name: cid
+          schema:
+            type: string
+          required: true
+          description: "ID del carrito"
+      responses:
+        '200':
+          description: "Carrito vaciado exitosamente"
+  /api/carts/{cid}/product/{pid}:
+    post:
+      summary: "Agregar producto al carrito"
+      parameters:
+        - in: path
+          name: cid
+          schema:
+            type: string
+          required: true
+          description: "ID del carrito"
+        - in: path
+          name: pid
+          schema:
+            type: string
+          required: true
+          description: "ID del producto"
+      requestBody:
+        description: "Cantidad de producto a agregar"
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                quantity:
+                  type: integer
+                  example: 1
+      responses:
+        '200':
+          description: "Producto agregado exitosamente"
+    delete:
+      summary: "Eliminar producto del carrito"
+      parameters:
+        - in: path
+          name: cid
+          schema:
+            type: string
+          required: true
+          description: "ID del carrito"
+        - in: path
+          name: pid
+          schema:
+            type: string
+          required: true
+          description: "ID del producto"
+      responses:
+        '200':
+          description: "Producto eliminado exitosamente"
+    put:
+      summary: "Actualizar cantidad de producto en el carrito"
+      parameters:
+        - in: path
+          name: cid
+          schema:
+            type: string
+          required: true
+          description: "ID del carrito"
+        - in: path
+          name: pid
+          schema:
+            type: string
+          required: true
+          description: "ID del producto"
+      requestBody:
+        description: "Nueva cantidad del producto"
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                quantity:
+                  type: integer
+                  example: 2
+      responses:
+        '200':
+          description: "Cantidad de producto actualizada exitosamente"
+  /api/carts/{cid}/purchase:
+    post:
+      summary: "Realizar la compra del carrito"
+      parameters:
+        - in: path
+          name: cid
+          schema:
+            type: string
+          required: true
+          description: "ID del carrito"
+      responses:
+        '200':
+          description: "Compra realizada exitosamente"

@@ -19,6 +19,7 @@ import mockingRouter from "./routes/faker.router.js";
 import manejadorErrores from "./middleware/error.js";
 import loggerRouter from "./routes/loggertest.router.js"
 import {logger, addLogger} from "./utils/logger.js"
+import { SwaggerUi, swaggerSpecs } from "./config/swagger.js";
 
 //Constantes
 //conexion puerto
@@ -66,6 +67,7 @@ app.use("/api/carts", cartRouter)
 app.use("/mockingproducts", mockingRouter)
 app.use(manejadorErrores)
 app.use("/loggertest", loggerRouter)
+app.use("/api-docs", SwaggerUi.serve, SwaggerUi.setup(swaggerSpecs))
 
 
 
