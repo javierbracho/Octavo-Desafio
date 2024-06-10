@@ -36,4 +36,20 @@ describe('Products Router Tests', () => {
   
 });
 
+describe('Cart Router Tests', () => {
+  let cartId;
+
+  it('Crea un nuevo carrito', async () => {
+    const {statusCode, ok,body} = await requester.post('/api/carts');
+    console.log(statusCode)
+    console.log(ok)
+    console.log(body)
+    expect(statusCode).to.equal(200);
+    expect(body).to.have.property('_id');
+    cartId = body._id;
+
+  });
+
+});
+
 
