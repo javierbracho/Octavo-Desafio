@@ -75,6 +75,40 @@ class sessionRepository {
             throw new Error("Error al cambiar el rol del usuario");
         }
     }
+    async uploadFiles(uid, uploadedDocuments) {
+        
+        try {
+            const user = await userModel.findById(uid);
+            if (!user) {
+                throw new Error("Usuario no encontrado");
+            }
+            if (uploadedDocuments) {
+                if (uploadedDocuments.document) {
+                    user.documents = user.documents.concat(uploadedDocuments.document.map(doc => ({
+                        name: doc.originalname,
+                        reference: doc.path
+                    })));
+                }
+                if (uploadedDocuments.products) {
+                    user.documents = user.documents.concat(uploadedDocuments.products.map(doc => ({
+                        name: doc.originalname,
+                        reference: doc.path
+                    })));
+                }
+                if (uploadedDocuments.profile) {
+                    user.documents = user.documents.concat(uploadedDocuments.profile.map(doc => ({
+                        name: doc.originalname,
+                        reference: doc.path
+                    })));
+                }
+            }
+            await user.save();
+        } catch (error) {
+            logger.error("Error al subir archivos al servidor", error);
+            throw new Error("Error al subir archivos para cambio de rol del usuario");
+        }
+    }
+    
 }
 
 export {autenticarUsuario, sessionRepository}

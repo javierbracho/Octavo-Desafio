@@ -1,5 +1,6 @@
 import {autenticarUsuario, sessionRepository} from "../repositories/session.repository.js";
 import { logger } from "../utils/logger.js";
+import uploads from "../middleware/multer.js";
 
 const SessionRepository = new sessionRepository ()
 
@@ -82,6 +83,28 @@ class sessionController {
             logger.error("Error al ejecutar función de cambio de rol en el servidor:", error);
         }   
     }
+
+    async uploadDocuments(req, res) {
+        const { uid } = req.params;
+        uploads.fields([{ name: "document" }, { name: "products" }, { name: "profile" }])(req, res, async (err) => {
+            if (err) {
+                return res.status(500).send({ status: "error", message: "Error al subir archivos" });
+            }
+            try {
+                const uploadedDocuments = req.files;
+                if (!uploadedDocuments || Object.keys(uploadedDocuments).length === 0) {
+                    return res.status(400).send({ status: "error", message: "No se proporcionaron archivos" });
+                }
+
+                await SessionRepository.uploadFiles(uid, uploadedDocuments);
+                res.status(200).send("Documentos cargados exitosamente");
+            } catch (error) {
+                res.status(500).send({ status: "error", message: "Error al subir documentos" });
+                logger.error("Error al ejecutar función de subir documentos para el cambio de rol en el servidor:", error);
+            }
+        });
+    }
+    
 }
 
 export default sessionController

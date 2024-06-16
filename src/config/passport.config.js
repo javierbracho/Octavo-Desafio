@@ -27,6 +27,9 @@ const initializePassport = () => {
                 age,               
                 password: createHash(password),
                 cart: newCart._id,
+                documents,
+                last_connection,
+
 
             }
             const result = await userModel.create(newUser)
@@ -41,6 +44,8 @@ const initializePassport = () => {
     }, async (email, password, done) => {
         try {
             const user = await userModel.findOne({email});
+                user.last_connection = new Date ()
+                await user.save()
             if(!user) {
                 console.log("Usuario inexistente")
                 return done (null, false)

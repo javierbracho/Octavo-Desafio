@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "nodemon src/app.js --mode desarrollo",
     "start": "node src/app.js --mode produccion",
-    "test": "mocha src/test/products.test.js"
+    "test": "mocha src/test/supertest.test.js"
   },
   "keywords": [],
   "author": "",
@@ -27,6 +27,7 @@
     "mocha": "^10.4.0",
     "mongoose": "^8.3.1",
     "mongoose-paginate-v2": "^1.8.0",
+    "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.13",
     "nodemon": "^3.1.0",
     "passport": "^0.7.0",
