@@ -17,7 +17,8 @@ const storage = multer.diskStorage({
         cb(null, destinationFolder)
     },
     filename: (req, file, cb) => {
-        cb(null, file.originalname)
+        const extension = file.originalname.split('.').pop(); // Extrae la extensión del archivo
+        cb(null, file.fieldname + '.' + extension);
     }
 })
 
