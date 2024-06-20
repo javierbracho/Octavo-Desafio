@@ -75,18 +75,19 @@ class sessionController {
 
     async changeRole (req, res) {
         const { uid } = req.params;
+
         try {
-            const updatedUser = await repository.changeRole(uid);
+            const updatedUser = await SessionRepository.changeRole(uid);
             res.json(updatedUser);
         } catch (error) {
-            res.status(500).send({ status: "error", message: "Error en el servidor" });
-            logger.error("Error al ejecutar función de cambio de rol en el servidor:", error);
-        }   
+            res.status(500).send({ status: "error", message: error.message });
+            console.error("Error al ejecutar función de cambio de rol en el servidor:", error);
+        }
     }
 
     async uploadDocuments(req, res) {
         const { uid } = req.params;
-        uploads.fields([{ name: "document" }, { name: "products" }, { name: "profile" }])(req, res, async (err) => {
+        uploads.fields([{ name: "identificacion" },{ name: "comprobante-de-domicilio" },{ name: "comprobante-de-estado-de-cuenta" }, { name: "products" }, { name: "profile" }])(req, res, async (err) => {
             if (err) {
                 return res.status(500).send({ status: "error", message: "Error al subir archivos" });
             }

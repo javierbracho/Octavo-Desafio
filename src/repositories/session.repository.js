@@ -67,8 +67,22 @@ class sessionRepository {
             if (!user) {
                 throw new Error("Usuario no encontrado");
             }
+
+            // Lista de documentos requeridos
+            const requiredDocuments = ["identificacion", "comprobante-de-domicilio", "comprobante-de-estado-de-cuenta"];
+            
+            // Verificar si todos los documentos requeridos están presentes
+            const userDocuments = user.documents.map(doc => doc.name);
+            const allDocumentsPresent = requiredDocuments.every(doc => userDocuments.includes(doc));
+
+            if (!allDocumentsPresent) {
+                throw new Error("Usuario debe adjuntar todos los documentos requeridos");
+            }
+
+            // Cambiar el rol del usuario
             const newRole = user.role === "user" ? "premium" : "user";
             const updatedUser = await userModel.findByIdAndUpdate(uid, { role: newRole }, { new: true });
+
             return updatedUser;
         } catch (error) {
             logger.error("Error al ejecutar función de cambio de rol en el servidor:", error);
@@ -82,26 +96,45 @@ class sessionRepository {
             if (!user) {
                 throw new Error("Usuario no encontrado");
             }
-            if (uploadedDocuments) {
-                if (uploadedDocuments.document) {
-                    user.documents = user.documents.concat(uploadedDocuments.document.map(doc => ({
-                        name: doc.originalname,
-                        reference: doc.path
-                    })));
-                }
-                if (uploadedDocuments.products) {
-                    user.documents = user.documents.concat(uploadedDocuments.products.map(doc => ({
-                        name: doc.originalname,
-                        reference: doc.path
-                    })));
-                }
-                if (uploadedDocuments.profile) {
-                    user.documents = user.documents.concat(uploadedDocuments.profile.map(doc => ({
-                        name: doc.originalname,
-                        reference: doc.path
-                    })));
-                }
+    
+            const documents = [];
+    
+            if (uploadedDocuments.profile) {
+                documents.push(...uploadedDocuments.profile.map((doc) => ({
+                    name: `profile_${doc.originalname}`, // Asigna prefijo para identificación
+                    reference: doc.path
+                })));
             }
+    
+            if (uploadedDocuments.products) {
+                documents.push(...uploadedDocuments.products.map((doc) => ({
+                    name: `products_${doc.originalname}`, // Asigna prefijo para identificación
+                    reference: doc.path
+                })));
+            }
+    
+            if (uploadedDocuments.identificacion) {
+                documents.push(...uploadedDocuments.identificacion.map((doc) => ({
+                    name: doc.fieldname, // Asigna prefijo para identificación
+                    reference: doc.path
+                })));
+            }
+    
+            if (uploadedDocuments["comprobante-de-domicilio"]) {
+                documents.push(...uploadedDocuments["comprobante-de-domicilio"].map((doc) => ({
+                    name: doc.fieldname, // Asigna prefijo para identificación
+                    reference: doc.path
+                })));
+            }
+    
+            if (uploadedDocuments["comprobante-de-estado-de-cuenta"]) {
+                documents.push(...uploadedDocuments["comprobante-de-estado-de-cuenta"].map((doc) => ({
+                    name: doc.fieldname, // Asigna prefijo para identificación
+                    reference: doc.path
+                })));
+            }
+    
+            user.documents = documents; // Actualiza los documentos
             await user.save();
         } catch (error) {
             logger.error("Error al subir archivos al servidor", error);
