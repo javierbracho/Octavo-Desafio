@@ -2,6 +2,11 @@ import productModel from "../models/product.model.js"
 import customError from "../services/errors/custom-error.js";
 import EErrors from "../services/errors/enums.js"
 import {generateProductsErrorInfo , generateProductsErrorCode}  from "../services/errors/info.js"
+import userModel from "../models/user.model.js"
+import EmailManager from "../services/email.js";
+
+const emailManager = new EmailManager()
+
 
 class ProductRepository {
     async getProducts(options) {
@@ -78,7 +83,14 @@ class ProductRepository {
                     console.log("No se encontró producto por el ID")
                     return null
                 }
-                console.log("Producto eliminado")
+            const ownerEmail = deleteProduct.owner;    
+            const user = await userModel.findOne({email: ownerEmail})
+                if (!user) {
+                    console.log("No se encontró producto por el ID")
+                    return null
+                }
+            const ownerName = `${user.first_name} ${user.last_name}`    
+            await emailManager.deleteProductNotification(ownerEmail, ownerName, deleteProduct.title)        
         } catch (error) {
             res.status(500).json("Error en el servidor")
             console.log("error al eliminar producto", error)

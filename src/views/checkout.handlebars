@@ -1,0 +1,25 @@
+   <div class="container mt-5">
+        <div class="card">
+            <div class="card-header text-center">
+                <h2>Detalle del Ticket de Compra</h2>
+            </div>
+            <div class="card-body">
+                {{#if ticket}}
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>Código:</strong> {{ticket.code}}</li>
+                    <li class="list-group-item"><strong>Fecha de Compra:</strong> {{ticket.purchase_datetime}}</li>
+                    <li class="list-group-item"><strong>Monto Total:</strong> ${{ticket.amount}}</li>
+                    <li class="list-group-item"><strong>Comprador:</strong> {{ticket.purchaser}}</li>
+                </ul>
+                {{else}}
+                <div class="alert alert-warning" role="alert">
+                    No se encontró el ticket de compra.
+                </div>
+                {{/if}}
+            </div>
+            <div class="card-footer text-center">
+                <a href="/cart" class="btn btn-primary">Volver al Carrito</a>
+                <a href="/shop" class="btn btn-secondary">Seguir Comprando</a>
+            </div>
+        </div>
+    </div>

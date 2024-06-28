@@ -9,7 +9,7 @@ class sessionController {
         autenticarUsuario (req, res, async () =>{
             try {
                 if(!req.user){
-                    return res.status(400).send({ status: "error" });
+                    return res.status(400).render("login", { error: "¡Ups! Parece que tus credenciales de inicio de sesión son incorrectas. Por favor, revisa tu nombre de usuario y contraseña y vuelve a intentarlo." });                
                 }
                 req.session.user = {
                     first_name: req.user.first_name,

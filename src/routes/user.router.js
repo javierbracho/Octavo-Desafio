@@ -6,6 +6,9 @@ const userController = new UserController();
 
 router.post("/", userController.userRegister);
 router.get("/failedregister", userController.failedRegister);
+router.get("/show", userController.getUsers)
+router.delete("/delete", userController.deleteUsers)
+
 
 export default router;
 

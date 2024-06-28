@@ -1,46 +1,18 @@
-
-    <nav class="navbar navbar-dark bg-dark border-body" data-bs-theme="dark">     
-        <div class="container-fluid">
-            <div class="img-brand">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Peugeot_Logo.svg/1865px-Peugeot_Logo.svg.png" class="img-fluid"alt="logoPeugeot">
-
-            </div>
-            <a class="navbar-brand" href="/">Peugeot</a>
-            <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-            >
-            <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="nav-link active" aria-current="page" href="/products">Modelos</a>
-                <a class="nav-link" href="/">Profile</a>
-                <a class="nav-link" href="/login">Login</a>
-            </div>
-            </div>
-        </div>
-    </nav>
- <a href="/session/logout">Logout</a>
+<a href="/session/logout">Logout</a>
 
 <div class="container">
     <div class="row">
         {{#each payload}}
         <div class="col-md-4">
             <div class="card mb-4">
-                <img src="{{this.image}}" class="card-img-top" alt="Product Image"> <!-- Agrega la imagen aquí -->
+                <img src="{{this.image}}" class="card-img-top" alt="Product Image">
                 <div class="card-body">
-                    <h5 class="card-title">{{this.title}}</h5>
+                    <h5 class="card-title text-black">{{this.title}}</h5>
                     <p class="card-text">{{this.description}}</p>
                     <p class="card-price">Price: {{this.price}}</p>
                     <p class="card-stock">Stock: {{this.stock}}</p>
-                    <form id="cart-form" action="/api/carts/{{this.cartId}}/product/{{this._id}}" method="post">
-                        <button type="submit" class="btn btn-primary">Agregar al carrito</button>
+                    <form class="cart-form" data-cart-id="{{this.cartId}}" data-product-id="{{this._id}}">
+                        <button type="button" class="btn btn-primary add-to-cart">Agregar al carrito</button>
                     </form>
                 </div>
             </div>
@@ -50,9 +22,4 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
-
-
-
-
+<script src="js/products.js"></script>

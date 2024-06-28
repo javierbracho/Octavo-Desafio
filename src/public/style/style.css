@@ -6,14 +6,10 @@
     width: 100px;
 }
 
-.container-menu{
-    width: 100vw; 
-    height: 50vw; 
-    background-image: url("https://www.peugeot.cl/content/dam/peugeot/chile/b2c/index/2024/28-mar/range.png?imwidth=1920");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
+ion-icon {
+    color: white;
+  }
+
 
 .chat {
     border: 2px solid black;

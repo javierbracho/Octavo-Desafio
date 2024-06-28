@@ -2,15 +2,18 @@ import userDto from "../dto/user.dto.js";
 
 
 class ViewsController {
-    async cargarHome (req, res) {
+    async cargarHome(req, res) {
+        let cartId;
         try {
-            res.render("home")
-
+            if (req.session && req.session.login) {
+                cartId = req.session.user.cartId._id; 
+            }
+            res.render("home", { cartId });
         } catch (error) {
             res.status(500).json("Error en el servidor");
-
         }
     }
+    
 
     async login (req, res) {
         try {
@@ -142,8 +145,6 @@ async profile(req, res) {
     async renderConfirmacion(req, res) {
         res.render("confirmacion-Request-Password");
     }
-
-
 }
 
 export default ViewsController

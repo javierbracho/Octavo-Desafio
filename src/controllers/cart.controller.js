@@ -1,11 +1,7 @@
 import cartRepository from "../repositories/cart.repository.js";
 import productRepository from "../repositories/product.repository.js"
-import userModel from "../models/user.model.js"
-import ticketModel from "../models/ticket.model.js"
-import cartUtils from "../utils/cartUtils.js";
 import {logger} from "../utils/logger.js"
 
-const {generateUniqueCode, calcularTotal} = cartUtils
 
 const CartRepository = new cartRepository()
 const ProductRepository = new productRepository()
@@ -44,7 +40,7 @@ class cartController {
             
         } catch (error) {
             res.status(500).json("Error en el servidor");
-            logger.error("error al crear carrito", error)
+            logger.error("error al obtener carrito", error)
         }
     }
 
@@ -57,14 +53,19 @@ class cartController {
     
         try {
             const result = await CartRepository.addProduct(cartId, productId, quantity, role, email);
-                if (result.error) {
-                    return res.status(400).json({ error: result.error });
-                }
     
-            res.send("Producto agregado");
+            if (result.error) {
+                return res.status(400).json({ message: result.error, type: 'error' });
+            }
+    
+            if (result.message) {
+                return res.status(200).json({ message: result.message, type: 'info' });
+            }
+    
+            return res.status(200).json({ message: 'Producto agregado correctamente', type: 'success' });
         } catch (error) {
-            res.status(500).json("Error en el servidor");
-            logger.warning("error al agregar producto al carrito", error);
+            logger.warning("Error al agregar producto al carrito", error);
+            return res.status(500).json({ message: 'Error en el servidor', type: 'error' });
         }
     }
     
@@ -139,43 +140,18 @@ class cartController {
         }
     }
 
-    async checkout (req, res) {
-        const cartId = req.params.cid
+    async checkout(req, res) {
+        const cartId = req.params.cid;
         try {
-            const cart = await CartRepository.getCartById(cartId)
-            const products = cart.products
-
-            const withoutStock = []
-            for (const item of products) {
-                const productId = item.product
-                const product = await ProductRepository.getProductById(productId)
-                if(product.stock >= item.quantity) {
-                    product.stock -= item.quantity
-                    await product.save()
-                } else {
-                    withoutStock.push(productId)
-                }
-            }
-
-            const userCart = await userModel.findOne({cart: cartId})
-
-            const ticket = new ticketModel({
-                code: generateUniqueCode(),
-                purchase_datetime: new Date(),
-                amount: calcularTotal(cart.products),
-                purchaser: userCart._id
-            })
-            await ticket.save()
-            cart.products = cart.products.filter(item => withoutStock.some(productId => productId.equals(item.product)));
-            await cart.save()
-
-            res.status(200).json({ ticket }); // agregar renderizado de vista y enviar correo con la compra
-
+            const ticket = await CartRepository.checkout(cartId);
+            const checkoutTicket = ticket.toObject();
+    
+            res.render('checkout', { ticket: checkoutTicket });
         } catch (error) {
             logger.warning('Error al procesar la compra:', error);
-            res.status(500).json({ error: 'Error interno del servidor' });
+            res.status(500).render('error', { error: 'Error interno del servidor' });
         }
-    } 
+    }
 }
 
 export default cartController
