@@ -1,13 +1,13 @@
 import Express from "express";
 import CartController from "../controllers/cart.controller.js"
-import viewsController from "../controllers/views.controller.js";
+import validation from "../middleware/validation.js";
 
-const ViewsController = new viewsController()
+const Validation = new validation()
 const router = Express.Router()
 const cartController = new CartController ()
 
 router.post("/", cartController.newCart)
-router.get("/:cid", ViewsController.cargarCart ,cartController.getCart)
+router.get("/:cid", Validation.user, cartController.getCart)
 router.post("/:cid/product/:pid", cartController.addProduct)
 router.delete("/:cid/product/:pid", cartController.deleteProduct)
 router.put("/:cid/product/:pid", cartController.updateQuantity)

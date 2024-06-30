@@ -16,7 +16,7 @@ const renderProductos = (productos) => {
 
         card.innerHTML = `
             <div class="card">
-                <img src="${item.img}" class="card-img-top" alt="${item.title}">
+                <img src="${item.thumbnail}" class="card-img-top" alt="${item.title}">
                 <div class="card-body">
                     <h5 class="card-title">${item.title}</h5>
                     <p class="card-text">Precio: $${item.price}</p>

@@ -1,12 +1,12 @@
 import Express  from "express";
 import ProductController from "../controllers/product.controller.js";
-import viewsController from "../controllers/views.controller.js";
+import validation from "../middleware/validation.js";
 
-const ViewsController = new viewsController()
+const Validation = new validation()
 const productController = new ProductController()
 const router = Express.Router()
 
-router.get("/", ViewsController.cargarProducts, productController.getProducts)
+router.get("/", Validation.user, productController.getProducts)
 router.post ("/", productController.postProducts)
 router.delete("/:pid", productController.DeleteProduct)
 router.get("/:pid", productController.GetProductById)

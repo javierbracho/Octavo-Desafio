@@ -41,53 +41,9 @@ class ViewsController {
         }
     }
 
-    async cargarProducts ( req, res, next) {
-        try {
-            if (req.session && req.session.user) {
-                if (req.session.user.role === "user" || req.session.user.role === "premium") {
-                    next ()
-                } else {
-                    res.send("Sin autorizacion, debes iniciar sesion como USUARIO")
-                }
-            } else {
-                res.send("Sin autorizacion, debes iniciar sesion")
-            }
-        } catch (error) {
-            console.error("Error en el middleware de autorización:", error);
-            res.status(500).json("Error en el servidor");
-
-        }
-    }
-
-    async cargarCart ( req, res, next) {
-        try {
-            if (req.session && req.session.user) {
-                if (req.session.user.role === "user" || req.session.user.role === "premium") {
-                    next ()
-                } else {
-                    res.send("Sin autorizacion, debes iniciar sesion como USUARIO")
-                }
-            } else {
-                res.send("Sin autorizacion, debes iniciar sesion")
-            }
-        } catch (error) {
-            console.error("Error en el middleware de autorización:", error);
-            res.status(500).json("Error en el servidor");
-
-        }
-    }
-
     async chat(req, res, next) {
         try {
-            if (req.session && req.session.user) {
-                if (req.session.user.role === "user" || req.session.user.role === "premium") {
-                    res.render("chat")
-                } else {
-                    res.send("Sin autorizacion, debes iniciar sesion como USUARIO")
-                }
-            } else {
-                res.send("Sin autorizacion, debes iniciar sesion")
-            }
+            res.render("chat")
         } catch (error) {
             console.error("Error en el middleware de autorización:", error);
             res.status(500).json("Error en el servidor");
@@ -116,23 +72,15 @@ async profile(req, res) {
     }
 }
 
-    async realtime ( req,res ) {
+    async realtime(req, res) {
         try {
-            if(req.session && req.session.login){
-                if(req.session.user.role === "admin" || req.session.user.role === "premium"){
-                    res.render("realtime", {role: req.session.user.role, email: req.session.user.email}) //simplificar
-                } else {
-                    res.send("No tienes permiso")
-                }
-            } else {
-                res.redirect("/login")
-            }
+            res.render("realtime", { role: req.session.user.role, email: req.session.user.email });
         } catch (error) {
             console.error('Error al cargar realtime:', error);
             res.status(500).json({ error: 'Error interno del servidor' });
-    
         }
     }
+
 
     async renderResetPassword(req, res) {
         res.render("passwordreset");
