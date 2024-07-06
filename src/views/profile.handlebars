@@ -51,12 +51,16 @@
     <div class="d-flex justify-content-center">
         <a href="/realtime" class="btn btn-primary mt-4">Ingresar / Modificar productos</a>
     </div>
-{{/ifEqual}}    
+{{else}}
+    <div class="d-flex justify-content-center">
+        <a href="/session/upgradeaccount" class="btn btn-primary mt-4">Mejora tu cuenta a premium</a>
+    </div>
+
+{{/ifEqual}}
 
 
 <div class="ms-4">
      <a href="/session/logout" class="btn btn-primary">Logout</a>
-
 </div>
 
 

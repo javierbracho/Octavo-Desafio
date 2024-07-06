@@ -17,7 +17,8 @@ class sessionController {
                     age: req.user.age,
                     email: req.user.email,
                     cartId: req.user.cart,
-                    role: req.user.role
+                    role: req.user.role,
+                    id: req.user._id
                   };
                   req.session.login = true;
                   res.redirect("/profile");
@@ -75,7 +76,6 @@ class sessionController {
 
     async changeRole (req, res) {
         const { uid } = req.params;
-
         try {
             const updatedUser = await SessionRepository.changeRole(uid);
             res.json(updatedUser);
@@ -89,21 +89,32 @@ class sessionController {
         const { uid } = req.params;
         uploads.fields([{ name: "identificacion" },{ name: "comprobante-de-domicilio" },{ name: "comprobante-de-estado-de-cuenta" }, { name: "products" }, { name: "profile" }])(req, res, async (err) => {
             if (err) {
-                return res.status(500).send({ status: "error", message: "Error al subir archivos" });
+                return res.render('upgrade',{ status: "error", message: "Error al subir archivos", userId: uid});
             }
             try {
                 const uploadedDocuments = req.files;
                 if (!uploadedDocuments || Object.keys(uploadedDocuments).length === 0) {
-                    return res.status(400).send({ status: "error", message: "No se proporcionaron archivos" });
+                    return res.render('upgrade',{ status: "error", message: "No se proporcionaron archivos",userId: uid });
                 }
 
                 await SessionRepository.uploadFiles(uid, uploadedDocuments);
-                res.status(200).send("Documentos cargados exitosamente");
+                res.render('upgrade', { message: "Documentos cargados exitosamente", status: "success", userId: uid});
             } catch (error) {
                 res.status(500).send({ status: "error", message: "Error al subir documentos" });
                 logger.error("Error al ejecutar función de subir documentos para el cambio de rol en el servidor:", error);
             }
         });
+    }
+
+    async upgradeAccount (req, res) {
+        try {
+            const userId = req.session.user.id
+            console.log(userId)
+            res.render("upgrade", {userId})
+        } catch (error) {
+            console.error("Error rendering uploadsDocuments page:", error);
+            res.status(500).send("Internal Server Error");
+        }
     }
     
 }

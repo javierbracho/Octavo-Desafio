@@ -1,0 +1,27 @@
+<div class="container mt-5" data-message="{{message}}" data-status="{{status}}" data-userid="{{userId}}">
+    <h2 class="mb-4">Conviertete en un usuario premium</h2>
+    <h1> TU ID ES:{{userId}} </h1>
+    <form action="/session/{{userId}}/documents" method="POST" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="formFile" class="form-label">Identificacion</label>
+        <input class="form-control" type="file" id="formFile" name="identificacion">
+    </div>
+    <div class="mb-3">
+        <label for="formFile" class="form-label">Comprobante de domicilio</label>
+        <input class="form-control" type="file" id="formFile" name="comprobante-de-domicilio">
+    </div>
+    <div class="mb-3">
+        <label for="formFile" class="form-label">Comprobante de estado de cuenta</label>
+        <input class="form-control" type="file" id="formFile" name="comprobante-de-estado-de-cuenta">
+    </div>
+        <button type="submit" class="btn btn-primary">Subir archivos</button>
+        </form>
+    </div>
+</div>
+
+    <div class="d-flex justify-content-center mt-4">
+        <button id="activarPremium" class="btn btn-primary">Activar cuenta premium</button>
+    </div>
+
+<script src="/js/upgrade.js"></script>
+
