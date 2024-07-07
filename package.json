@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon src/app.js --mode desarrollo",
-    "start": "node src/app.js --mode produccion",
+    "start": "node src/app.js --mode desarrollo",
     "test": "mocha src/test/supertest.test.js"
   },
   "keywords": [],
