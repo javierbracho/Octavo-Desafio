@@ -31,6 +31,7 @@
         </div>
     </div>
 
+    {{#if products.length}}
     <div class="container">
         <div class="d-flex justify-content-center align-items-center mt-4">
             <form action="/api/carts/{{cartId}}/purchase" method="post">
@@ -38,6 +39,6 @@
             </form>
         </div>
     </div>
-</div>
+    {{/if}}
 
 <script src="/js/cart.js"></script>
