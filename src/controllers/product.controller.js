@@ -12,7 +12,9 @@ class ProductController {
                 limit: parseInt(req.query.limit) || 10,
                 page: parseInt(req.query.page) || 1
             };
-            const carritoId = req.session.user.cartId ? req.session.user.cartId._id : null;
+            const cartId = req.session.user.cartId;
+            const carritoId = (cartId && typeof cartId === 'object' && cartId._id) ? cartId._id : cartId;
+                        
             const products = await productRepository.getProducts(options);
             const finalProducts = products.docs.map(product => {
                 const { _id, ...rest } = product.toObject();

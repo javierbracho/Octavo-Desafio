@@ -50,27 +50,29 @@ class ViewsController {
         }
     }
 
-async profile(req, res) {
-    try {
-        if (req.session && req.session.login) {
-            const userSessionDto = new userDto(
-                req.session.user.first_name,
-                req.session.user.last_name,
-                req.session.user.email,
-                req.session.user.role,
-                req.session.user.cartId._id
-            );
-
-            console.log(req.session.user)
-            res.render("profile", { userDto: userSessionDto });
-        } else {
-            res.redirect("/login");
+    async profile(req, res) {
+        try {
+            if (req.session && req.session.login) {
+                const cartId = req.session.user.cartId;
+    
+                const userSessionDto = new userDto(
+                    req.session.user.first_name,
+                    req.session.user.last_name,
+                    req.session.user.email,
+                    req.session.user.role,
+                    cartId._id ? cartId._id : cartId
+                );
+    
+                console.log('Datos de la sesión:', req.session.user);
+                res.render("profile", { userDto: userSessionDto });
+            } else {
+                res.redirect("/login");
+            }
+        } catch (error) {
+            console.error('Error al cargar el perfil:', error);
+            res.status(500).json({ error: 'Error interno del servidor' });
         }
-    } catch (error) {
-        console.error('Error al cargar el perfil:', error);
-        res.status(500).json({ error: 'Error interno del servidor' });
     }
-}
 
     async realtime(req, res) {
         try {

@@ -17,11 +17,13 @@ class userController {
                 age: req.user.age,
                 email: req.user.email,
                 cartId: req.user.cart,
-                role: req.user.role
+                role: req.user.role,
+                id: req.user._id
 
             };
             req.session.login = true;
-            res.redirect("/products");
+            console.log(req.session.user)
+            res.redirect("/profile");
         });
     }
 

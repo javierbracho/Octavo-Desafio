@@ -52,6 +52,7 @@ class cartController {
         const email = req.session.user.email;
     
         try {
+            
             const result = await CartRepository.addProduct(cartId, productId, quantity, role, email);
     
             if (result.error) {

@@ -4,8 +4,7 @@ class userDto {
         this.last_name = last_name,
         this.email = email,
         this.role = role,
-        this.cartId = cartId
-    }
+        this.cartId = cartId.toString();    }
 }
 
 export default userDto

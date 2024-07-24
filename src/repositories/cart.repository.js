@@ -51,7 +51,7 @@ class CartRepository {
                 return { error: "Producto no encontrado" };
             }
     
-            if (role === "premium" || product.owner === email) {
+            if (role === "premium" && product.owner === email) {
                 return { error: "No puedes agregar al carrito tu propio producto" };
             }
     

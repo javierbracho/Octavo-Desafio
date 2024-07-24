@@ -1,6 +1,6 @@
 <div class="container mt-5" data-message="{{message}}" data-status="{{status}}" data-userid="{{userId}}">
     <h2 class="mb-4">Conviertete en un usuario premium</h2>
-    <h1> TU ID ES:{{userId}} </h1>
+    <h1> TU ID ES: {{userId}} </h1>
     <form action="/session/{{userId}}/documents" method="POST" enctype="multipart/form-data">
     <div class="mb-3">
         <label for="formFile" class="form-label">Identificacion</label>
@@ -22,6 +22,30 @@
     <div class="d-flex justify-content-center mt-4">
         <button id="activarPremium" class="btn btn-primary">Activar cuenta premium</button>
     </div>
+
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header text-white">
+            <h3 class="mb-0">Instrucciones</h3>
+        </div>
+        <div class="card-body">
+            <ul class="list-unstyled">
+                <li class="mb-3">
+                    <h5 class="card-title text-black">Paso: 1 Adjuntar Documentos</h5>
+                    <p>Debes adjuntar todos los documentos necesarios. Una vez estés seleccionados todos, debes pulsar el botón de subir archivos.</p>
+                </li>
+                <li class="mb-3">
+                    <h5 class="card-title text-black">Paso: 2 Activar Cuenta Premium</h5>
+                    <p>Una vez cuentes con la aprobación, por favor pulsa "activar cuenta premium".</p>
+                </li>
+                <li>
+                    <h5 class="card-title text-black">Paso:3 Reinicio de Sesión</h5>
+                    <p>Si recibes un mensaje de éxito, debes desloguearte y volver a iniciar sesión para que se cargue de forma correcta.</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
 
 <script src="/js/upgrade.js"></script>
 
