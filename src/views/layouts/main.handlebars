@@ -19,14 +19,15 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav me-auto">
                 {{#if userDto}}
-                <a class="nav-link active" aria-current="page" href="/products">Modelos</a> 
+                <a class="nav-link active" aria-current="page" href="/products">Tienda Online</a> 
                 {{else if cartId}}
-                <a class="nav-link active" aria-current="page" href="/products">Modelos</a>
+                <a class="nav-link active" aria-current="page" href="/products">Tienda Online</a>
                 {{else}}
-                <a class="nav-link active" aria-current="page" href="#" id="modelLink">Modelos</a>
+                <a class="nav-link active" aria-current="page" href="#" id="modelLink">Tienda Online</a>
                 {{/if}}
                 <a class="nav-link" href="/profile">Profile</a>
                 <a class="nav-link" href="/login">Login</a>
+                <a class="nav-link" href="/session/logout">Logout</a>
             </div>
             <div class="navbar-nav ms-auto">
                 {{#if userDto.cartId}}
